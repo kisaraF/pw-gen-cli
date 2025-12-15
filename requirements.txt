@@ -1,0 +1,2 @@
+click==8.1.8
+-e file:///home/kisaraf/Work/Sandbox/pw_gen_cli
