@@ -2,12 +2,35 @@ import click
 import random, string
 
 
+def pwd_gen(char_count):
+    master = []
+    for i in range(round(char_count * 0.2)):
+        master.append(random.randint(0, 9))
+
+    for j in range(round(char_count * 0.3)):
+        master.append(
+            string.ascii_lowercase[random.randint(0, len(string.ascii_lowercase) - 1)]
+        )
+
+    for k in range(round(char_count * 0.3)):
+        master.append(
+            string.ascii_uppercase[random.randint(0, len(string.ascii_uppercase) - 1)]
+        )
+
+    for l in range(round(char_count * 0.2)):
+        master.append(
+            string.punctuation[random.randint(0, len(string.punctuation) - 1)]
+        )
+
+    random.shuffle(master)
+    pw_text = "".join([str(i) for i in master])
+    return pw_text
+
+
 # Group chain of commands
 @click.group()
 def pw_gen():
     pass
-
-
 
 
 @click.command()
@@ -22,24 +45,14 @@ def get_help():
 
 
 @click.command()
-@click.option('--char_count', default=10, help='Number of characters for the password. Default would be 10')
+@click.option(
+    "--char_count",
+    default=10,
+    help="Number of characters for the password. Default would be 10",
+)
 # @click.argument('char_count')
 def gen_password(char_count):
-    master = []
-    for i in range(round(char_count * 0.2)):
-        master.append(random.randint(0,9))
-
-    for j in range(round(char_count * 0.3)):
-        master.append(string.ascii_lowercase[random.randint(0,len(string.ascii_lowercase)-1)])
-
-    for k in range(round(char_count * 0.3)):
-        master.append(string.ascii_uppercase[random.randint(0,len(string.ascii_uppercase)-1)])
-
-    for l in range(round(char_count * 0.2)):
-        master.append(string.punctuation[random.randint(0,len(string.punctuation)-1)])
-
-    random.shuffle(master)
-    pw_text = "".join([str(i) for i in master])
+    pw_text = pwd_gen(char_count)
 
     output_str = f"""
     Your Password: {pw_text}
@@ -48,7 +61,7 @@ def gen_password(char_count):
     !!!Important!!!
     Save it to a Password Manager NOW
     """
-    
+
     click.echo(output_str)
 
 
