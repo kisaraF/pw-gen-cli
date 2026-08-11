@@ -1,0 +1,23 @@
+name: deploy image
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v6
+      - name: login to ghcr
+        id: login-ghcr
+        env:
+          SVC_GHA_PKG_TKN: ${{ secrets.SVC_GHA_PKG_TKN }}
+        run: echo "$SVC_GHA_PKG_TKN" | docker login ghcr.io -u kisaraF --password-stdin
+      - name: build image
+        id: build-image
+        # if: success() && steps.login-ghcr.outcome == 'success' # redundant as this will be skipped if previous step is failed
+        run: docker build -t ghcr.io/kisaraf/pwgen-cli:latest .
+      - name: publish image
+        # if: success() && steps.build-image.outcome == 'success' # redundant as this will be skipped if previous step is failed
+        run: docker push ghcr.io/kisaraf/pwgen-cli:latest
