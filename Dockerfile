@@ -8,25 +8,24 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 
-# ---------- BUILDING FROM THE WHEEL FILE
-# Let's copy the wheel file
-# COPY dist/*.whl /app/
-
-# Now install the wheel file
-# RUN pip install --no-cache-dir /app/*.whl
-
-
-
 # ---------- BUILDING FROM THE SOURCE
 # Let's copy all the required files
-COPY pw_gen_cli ./pw_gen_cli
 COPY requirements.txt ./
 COPY pyproject.toml ./
+COPY README.md ./
 
 RUN pip install --no-cache-dir uv
-RUN uv pip install --system .
 
+# --system tells to install directly to docker system
+RUN uv pip install --system --no-cache -r requirements.txt
 
+COPY pw_gen_cli ./pw_gen_cli
+
+# The missing piece — installs pw-gen-cli itself,
+# which is what actually generates the `pwdgen` executable
+RUN uv pip install --system --no-cache .
 
 # Defaulting to bash to usage
-CMD ["bash"]
+# CMD ["bash"]
+
+CMD ["pwdgen", "gen-password"]
