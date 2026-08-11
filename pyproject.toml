@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
     "click>=8.1.8",
+    "ruff>=0.16.2",
 ]
 
 [project.scripts]
@@ -14,3 +15,14 @@ pwdgen = "pw_gen_cli.password_gen:pw_gen"
 [build-system]
 requires = ["flit_core<4"]
 build-backend = "flit_core.buildapi"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
+
+[tool.ruff]
+lint.ignore = [
+    "I001",
+    "EXE002"
+]
