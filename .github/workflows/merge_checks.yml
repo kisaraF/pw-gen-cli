@@ -1,0 +1,38 @@
+name: merge-checks
+on: 
+  pull_request:
+    types: [opened]
+  workflow_dispatch:
+jobs:
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v6
+      - name: install dependencies
+        run: uv sync --no-dev
+      - name: link-check
+        run: uv run ruff check
+        # run: uv runn ruff check --exit-zero   # this is to use when job should continue even if linting violations exist
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v6
+      - name: install dependencies
+        run: make deps
+      - name: run tests
+        run: make test
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v6
+      - name: install dependencies
+        run: make deps
+      - name: build docker image
+        run: make build
+      - name: run image
+        run: docker run pwgen-cli:make_latest
+      
+  
