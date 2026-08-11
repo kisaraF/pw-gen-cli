@@ -1,4 +1,3 @@
-import pytest
 import string
 from pw_gen_cli.password_gen import pwd_gen
 

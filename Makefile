@@ -1,4 +1,4 @@
-:PHONY: deps clean test
+:PHONY: deps clean test build compile-requirements
 
 deps:
 	uv sync
