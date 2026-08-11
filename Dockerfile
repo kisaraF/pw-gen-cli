@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir uv
 # --system tells to install directly to docker system
 RUN uv pip install --system --no-cache -r requirements.txt
 
-COPY pw_gen_cli ./pw_gen_cli
+COPY src/pw_gen_cli ./src/pw_gen_cli
 
 # The missing piece — installs pw-gen-cli itself,
 # which is what actually generates the `pwdgen` executable
