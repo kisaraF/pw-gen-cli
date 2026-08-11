@@ -2,7 +2,8 @@ name: merge-checks
 on: 
   pull_request:
     types: [opened]
-  workflow_dispatch:
+    branches: 
+      - master
 jobs:
   lint-code:
     runs-on: ubuntu-latest
