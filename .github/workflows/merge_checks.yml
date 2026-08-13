@@ -1,8 +1,8 @@
 name: merge-checks
-on: 
+on:
   pull_request:
     types: [opened]
-    branches: 
+    branches:
       - master
 jobs:
   lint-code:
@@ -11,7 +11,7 @@ jobs:
       - name: get code
         uses: actions/checkout@v6
       - name: install uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
       - name: install dependencies
         run: uv sync --no-dev
       - name: link-check
@@ -23,7 +23,7 @@ jobs:
       - name: get code
         uses: actions/checkout@v6
       - name: install uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
       - name: install dependencies
         run: make deps
       - name: run tests
@@ -35,12 +35,10 @@ jobs:
       - name: get code
         uses: actions/checkout@v6
       - name: install uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
       - name: install dependencies
         run: make deps
       - name: build docker image
         run: make build
       - name: run image
         run: docker run pwgen-cli:make_latest
-      
-  
