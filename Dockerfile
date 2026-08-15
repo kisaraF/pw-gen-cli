@@ -25,7 +25,5 @@ COPY src/pw_gen_cli ./src/pw_gen_cli
 # which is what actually generates the `pwdgen` executable
 RUN uv pip install --system --no-cache .
 
-# Defaulting to bash to usage
-# CMD ["bash"]
-
-CMD ["pwdgen", "gen-password"]
+# CMD ["pwdgen", "gen-password"]
+CMD ["bash"]
